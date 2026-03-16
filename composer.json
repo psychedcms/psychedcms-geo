@@ -1,0 +1,20 @@
+{
+    "name": "psychedcms/psychedcms-geo",
+    "description": "Geolocation field attribute and Elasticsearch indexing for PsychedCMS",
+    "type": "symfony-bundle",
+    "license": "proprietary",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.3",
+        "psychedcms/psychedcms-core": "^1.0 || @dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "PsychedCms\\Geo\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

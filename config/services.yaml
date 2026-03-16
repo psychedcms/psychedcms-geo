@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    PsychedCms\Geo\Indexing\GeoDocumentBuilderDecorator:
+        decorates: PsychedCms\Elasticsearch\Indexing\DocumentBuilder
+        arguments:
+            $decorated: '@.inner'
