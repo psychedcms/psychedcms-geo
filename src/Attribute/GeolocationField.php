@@ -34,6 +34,9 @@ final class GeolocationField extends FieldAttribute
         ?bool $listColumn = null,
         ?int $listColumnOrder = null,
         ?string $listDisplayPattern = null,
+        bool $listSortable = false,
+        bool $listFilterable = false,
+        ?string $listFilterType = null,
     ) {
         parent::__construct(
             label: $label,
@@ -56,6 +59,9 @@ final class GeolocationField extends FieldAttribute
             listColumn: $listColumn,
             listColumnOrder: $listColumnOrder,
             listDisplayPattern: $listDisplayPattern,
+            listSortable: $listSortable,
+            listFilterable: $listFilterable,
+            listFilterType: $listFilterType,
         );
     }
 
