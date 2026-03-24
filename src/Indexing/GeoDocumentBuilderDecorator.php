@@ -33,6 +33,8 @@ final class GeoDocumentBuilderDecorator extends DocumentBuilder
             $document[$propertyName] = $this->restructureGeolocation($document[$propertyName]);
         }
 
+        $document = $this->restructureNestedGeolocations($document, $geolocationFields);
+
         return $document;
     }
 
@@ -89,5 +91,37 @@ final class GeoDocumentBuilderDecorator extends DocumentBuilder
         }
 
         return $result;
+    }
+
+    /**
+     * Recursively walk the document and restructure any nested geolocation objects.
+     * Skips root-level fields already handled by getGeolocationFields().
+     *
+     * @param array<string, mixed> $data
+     * @param list<string> $skipKeys Root-level keys already processed
+     * @return array<string, mixed>
+     */
+    private function restructureNestedGeolocations(array $data, array $skipKeys = []): array
+    {
+        foreach ($data as $key => $value) {
+            if (\in_array($key, $skipKeys, true)) {
+                continue;
+            }
+
+            if (!\is_array($value)) {
+                continue;
+            }
+
+            // If this array has lat/lng keys, it's a geolocation object - restructure it
+            if (isset($value['lat']) && isset($value['lng'])) {
+                $data[$key] = $this->restructureGeolocation($value);
+                continue;
+            }
+
+            // Otherwise recurse into sub-arrays
+            $data[$key] = $this->restructureNestedGeolocations($value);
+        }
+
+        return $data;
     }
 }
